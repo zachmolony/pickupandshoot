@@ -13,6 +13,7 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
+import Text from './Text';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -29,18 +30,32 @@ export function Layout({
   header,
   isLoggedIn,
 }: LayoutProps) {
+  const isNotEnterPage = true;
+
   return (
     <>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside menu={header.menu} shop={header.shop} />
-      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
-      <main>{children}</main>
-      <Suspense>
-        <Await resolve={footer}>
-          {(footer) => <Footer menu={footer.menu} shop={header.shop} />}
-        </Await>
-      </Suspense>
+      {/* <CartAside cart={cart} /> */}
+      {/* <SearchAside /> */}
+      {/* <MobileMenuAside menu={header.menu} shop={header.shop} /> */}
+      {/* <Header header={header} cart={cart} isLoggedIn={isLoggedIn} /> */}
+      <div className="h-screen w-auto absolute object-cover -z-10">
+        <img
+          src="/puas-vid.gif"
+          alt="puas-vid"
+          className="h-full w-auto overflow-hidden filter blur-md"
+        />
+      </div>
+      <div className="flex items-center w-screen h-screen uppercase">
+        <div className="flex justify-center w-full h-2/5 bg-black py-16">
+          <div className="flex flex-col items-center w-11/12 gap-2">
+            {isNotEnterPage && <Text colour="white">Camera menu</Text>}
+            <div className="flex flex-col w-11/12 my-3 gap-2">
+              <>{children}</>
+            </div>
+            {isNotEnterPage && <Text colour="white">Push menu to exit</Text>}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
