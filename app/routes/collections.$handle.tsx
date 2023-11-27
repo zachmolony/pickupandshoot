@@ -8,6 +8,8 @@ import {
 } from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
+import {useState} from 'react';
+import Text from '~/components/Text';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -17,7 +19,7 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
   const {handle} = params;
   const {storefront} = context;
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 4,
   });
 
   if (!handle) {
@@ -38,41 +40,57 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
 
 export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
+  const [currentItem, setCurrentItem] = useState(0);
+
+  const previousItem = () => {
+    if (currentItem > 0) {
+      setCurrentItem(currentItem - 1);
+    } else {
+      setCurrentItem(collection.products.nodes.length - 1);
+    }
+  };
+
+  const nextItem = () => {
+    if (currentItem < collection.products.nodes.length - 1) {
+      setCurrentItem(currentItem + 1);
+    } else {
+      setCurrentItem(0);
+    }
+  };
 
   return (
     <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
+      {collection.products.nodes.length > 1 && (
+        <div className="mb-2" onClick={() => previousItem()}>
+          <span>↑ Previous item</span>
+        </div>
+      )}
       <Pagination connection={collection.products}>
         {({nodes, isLoading, PreviousLink, NextLink}) => (
           <>
-            <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-            </PreviousLink>
-            <ProductsGrid products={nodes} />
-            <br />
-            <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-            </NextLink>
+            {/* <PreviousLink>
+              {isLoading ? 'Loading...' : <span>↑ Previous item</span>}
+            </PreviousLink> */}
+            {[nodes[currentItem]].map((product, index) => {
+              return (
+                <ProductItem
+                  key={product.id}
+                  product={product}
+                  loading={index < 1 ? 'eager' : undefined}
+                />
+              );
+            })}
+            {/* <NextLink>
+              {isLoading ? 'Loading...' : <span>Next Item ↓</span>}
+            </NextLink> */}
           </>
         )}
       </Pagination>
-    </div>
-  );
-}
-
-function ProductsGrid({products}: {products: ProductItemFragment[]}) {
-  return (
-    <div className="products-grid">
-      {products.map((product, index) => {
-        return (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        );
-      })}
+      {collection.products.nodes.length > 1 && (
+        <div className="mt-2" onClick={() => nextItem()}>
+          <span>Next Item ↓</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -87,25 +105,25 @@ function ProductItem({
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
-    <Link
-      className="product-item"
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
-      {product.featuredImage && (
-        <Image
-          alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
-          data={product.featuredImage}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
-      <h4>{product.title}</h4>
-      <small>
-        <Money data={product.priceRange.minVariantPrice} />
-      </small>
+    <Link className="w-1/3" key={product.id} prefetch="intent" to={variantUrl}>
+      <div className="flex gap-3">
+        {product.featuredImage && (
+          <div className="w-1/3">
+            <Image
+              alt={product.featuredImage.altText || product.title}
+              aspectRatio="1/1"
+              data={product.featuredImage}
+              loading={loading}
+              sizes="(min-width: 5em) 40px, 10vw"
+            />
+          </div>
+        )}
+        <div className="flex flex-col h-full space-between">
+          <h4>{product.title}</h4>
+          <Money data={product.priceRange.minVariantPrice} />
+          <Text colour="green">View Details</Text>
+        </div>
+      </div>
     </Link>
   );
 }

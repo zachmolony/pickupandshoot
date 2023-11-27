@@ -117,8 +117,12 @@ export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+    <div className="flex gap-4">
+      <div className="flex flex-col w-1/3">
+        <ProductImage image={selectedVariant?.image} />
+        <br />
+        <ProductPrice selectedVariant={selectedVariant} />
+      </div>
       <ProductMain
         selectedVariant={selectedVariant}
         product={product}
@@ -133,15 +137,13 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
     return <div className="product-image" />;
   }
   return (
-    <div className="product-image">
-      <Image
-        alt={image.altText || 'Product Image'}
-        aspectRatio="1/1"
-        data={image}
-        key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
-      />
-    </div>
+    <Image
+      alt={image.altText || 'Product Image'}
+      aspectRatio="1/1"
+      data={image}
+      key={image.id}
+      sizes="(min-width: 5em) 20vw, 10vw"
+    />
   );
 }
 
@@ -157,9 +159,14 @@ function ProductMain({
   const {title, descriptionHtml} = product;
   return (
     <div className="product-main">
-      <h1>{title}</h1>
-      <ProductPrice selectedVariant={selectedVariant} />
-      <br />
+      {/* <h1>{title}</h1> */}
+      {/* <Image
+        alt={image.altText || 'Product Image'}
+        aspectRatio="1/1"
+        data={image}
+        key={image.id}
+        sizes="(min-width: 5em) 20vw, 10vw"
+      /> */}
       <Suspense
         fallback={
           <ProductForm
@@ -182,14 +189,6 @@ function ProductMain({
           )}
         </Await>
       </Suspense>
-      <br />
-      <br />
-      <p>
-        <strong>Description</strong>
-      </p>
-      <br />
-      <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-      <br />
     </div>
   );
 }
@@ -232,8 +231,8 @@ function ProductForm({
     <div className="product-form">
       <VariantSelector
         handle={product.handle}
-        options={product.options}
-        variants={variants}
+        options={[product.options[0]]}
+        variants={[variants[0]]}
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
@@ -263,12 +262,15 @@ function ProductForm({
 function ProductOptions({option}: {option: VariantOption}) {
   return (
     <div className="product-options" key={option.name}>
-      <h5>{option.name}</h5>
       <div className="product-options-grid">
         {option.values.map(({value, isAvailable, isActive, to}) => {
           return (
             <Link
-              className="product-options-item"
+              className={
+                'product-options-item flex flex-col ' +
+                `${isActive && ' bg-lime-400 text-slate-700 '}` +
+                `${!isAvailable && ' line-through '}`
+              }
               key={option.name + value}
               prefetch="intent"
               preventScrollReset
@@ -284,7 +286,6 @@ function ProductOptions({option}: {option: VariantOption}) {
           );
         })}
       </div>
-      <br />
     </div>
   );
 }
