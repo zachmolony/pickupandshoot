@@ -6,9 +6,10 @@ import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
+import Text from '~/components/Text';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: "Pick Up 'n Shoot | Home"}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {
@@ -17,16 +18,41 @@ export async function loader({context}: LoaderFunctionArgs) {
   const featuredCollection = collections.nodes[0];
   const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
 
-  return defer({featuredCollection, recommendedProducts});
+  return defer({collections, featuredCollection, recommendedProducts});
 }
+
+const content = {
+  homepage: {
+    items: [
+      {text: '1.Shop', link: '/collections'},
+      {text: '2.camera setup', link: '/collections'},
+      {text: '3.display setup', link: '/collections'},
+      {text: '4.other functions', link: '/collections'},
+    ],
+  },
+  shop: {
+    items: [
+      {text: '1.All items', link: '/collections'},
+      {text: '2.Tees', link: '/collections/tops'},
+      {text: '3.Keyrings', link: '/collections/keyrings'},
+      {text: '4.Posters', link: '/collections/posters'},
+    ],
+  },
+};
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+  console.log(data);
   return (
-    <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
-    </div>
+    <>
+      {content.homepage.items.map(({text, link}) => (
+        <Link key={link} to={link} prefetch="intent">
+          <Text key={text} colour="">
+            {text}
+          </Text>
+        </Link>
+      ))}
+    </>
   );
 }
 
@@ -36,18 +62,11 @@ function FeaturedCollection({
   collection: FeaturedCollectionFragment;
 }) {
   if (!collection) return null;
-  const image = collection?.image;
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
+    <Link to={`/collections/${collection.handle}`}>
+      <Text key={collection.title} colour="">
+        {collection.title}
+      </Text>
     </Link>
   );
 }
