@@ -50,6 +50,32 @@ a:hover {
   background-color: #00ff00;
 }
 
+@keyframes backgroundFlash {
+  0%,
+  50% {
+    background-color: #00ff00;
+  } /* Green for the first half */
+  51%,
+  100% {
+    background-color: transparent;
+  } /* Transparent for the second half */
+}
+
+@keyframes textFlash {
+  0%,
+  50% {
+    color: black;
+  } /* Slate with green background */
+  51%,
+  100% {
+    color: #fff;
+  } /* White with transparent background */
+}
+
+.flash {
+  animation: backgroundFlash 2s infinite linear, textFlash 2s infinite linear;
+}
+
 hr {
   border-bottom: none;
   border-top: 1px solid #000;

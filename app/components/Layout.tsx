@@ -1,5 +1,5 @@
 import {Await, useLocation} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -30,20 +30,12 @@ export function Layout({
   header,
   isLoggedIn,
 }: LayoutProps) {
-  const isNotEnterPage = true;
+  const [isEnterPage, setIsEnterPage] = useState(true);
 
   const location = useLocation();
 
-  console.log({location});
-
-  console.log('yeah');
-
   return (
     <>
-      {/* <CartAside cart={cart} /> */}
-      {/* <SearchAside /> */}
-      {/* <MobileMenuAside menu={header.menu} shop={header.shop} /> */}
-      {/* <Header header={header} cart={cart} isLoggedIn={isLoggedIn} /> */}
       <div className="h-screen w-auto absolute object-cover -z-10">
         <img
           src="/puas-vid.gif"
@@ -54,32 +46,49 @@ export function Layout({
       <div className="flex items-center w-screen h-screen uppercase">
         <div className="flex justify-center w-full h-2/5 bg-black py-16">
           <div className="flex flex-col items-center w-11/12 gap-2">
-            {isNotEnterPage && (
-              <Text colour="white">
-                <div className="flex justify-between w-full">
-                  <button
-                    className="cursor-pointer uppercase"
-                    onClick={() => window.history.back()}
-                    style={
-                      location.pathname !== '/' ? {opacity: 1} : {opacity: 0}
-                    }
+            {isEnterPage ? (
+              <>
+                <img src="/logo.png" alt="puas-logo" />
+                <button
+                  className="uppercase cursor-pointer"
+                  onClick={() => setIsEnterPage(false)}
+                >
+                  <div
+                    style={{height: '1.3rem'}}
+                    className="px-8 w-full flash textFade"
                   >
-                    Back
-                  </button>
-                  <div>Camera menu</div>
-                  <button
-                    className="cursor-pointer uppercase"
-                    onClick={() => (window.location.href = '/cart')}
-                  >
-                    Cart
-                  </button>
+                    press to enter
+                  </div>
+                </button>
+              </>
+            ) : (
+              <>
+                <Text colour="white">
+                  <div className="flex justify-between w-full">
+                    <button
+                      className="cursor-pointer uppercase"
+                      onClick={() => window.history.back()}
+                      style={
+                        location.pathname !== '/' ? {opacity: 1} : {opacity: 0}
+                      }
+                    >
+                      Back
+                    </button>
+                    <div>Camera menu</div>
+                    <button
+                      className="cursor-pointer uppercase"
+                      onClick={() => (window.location.href = '/cart')}
+                    >
+                      Cart
+                    </button>
+                  </div>
+                </Text>
+                <div className="flex flex-col w-11/12 my-3 gap-2">
+                  <>{children}</>
                 </div>
-              </Text>
+                <Text colour="white">Push menu to exit</Text>
+              </>
             )}
-            <div className="flex flex-col w-11/12 my-3 gap-2">
-              <>{children}</>
-            </div>
-            {isNotEnterPage && <Text colour="white">Push menu to exit</Text>}
           </div>
         </div>
       </div>
