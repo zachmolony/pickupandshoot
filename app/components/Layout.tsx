@@ -46,7 +46,7 @@ export function Layout({
       <div className="flex items-center w-screen h-screen uppercase">
         <div className="flex justify-center w-full h-2/5 bg-black py-16">
           <div className="flex flex-col items-center w-11/12 gap-2">
-            {isEnterPage ? (
+            {isEnterPage && location.pathname === '/' ? (
               <>
                 <img src="/logo.png" alt="puas-logo" />
                 <button

@@ -45,9 +45,9 @@ export default function Homepage() {
   console.log(data);
   return (
     <>
-      {content.homepage.items.map(({text, link}) => (
+      {content.homepage.items.map(({text, link}, index) => (
         <Link key={link} to={link} prefetch="intent">
-          <Text key={text} colour="">
+          <Text key={text} colour={index === 0 && 'green'}>
             {text}
           </Text>
         </Link>

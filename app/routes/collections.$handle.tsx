@@ -118,7 +118,7 @@ function ProductItem({
             />
           </div>
         )}
-        <div className="flex flex-col h-full space-between">
+        <div className="flex flex-col justify-between flex-grow">
           <h4>{product.title}</h4>
           <Money data={product.priceRange.minVariantPrice} />
           <Text colour="green">View Details</Text>
