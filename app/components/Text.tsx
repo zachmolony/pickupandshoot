@@ -7,7 +7,7 @@ const Text = ({colour = 'default', children}) => {
     green: 'bg-puas-green text-slate-700 w-9/12',
   };
   return (
-    <div style={{height: '1.3rem'}} className={`px-2 w-full ` + col[colour]}>
+    <div style={{height: '2rem'}} className={`px-2 w-full ` + col[colour]}>
       <span>{children}</span>
     </div>
   );

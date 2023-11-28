@@ -44,8 +44,8 @@ export function Layout({
         />
       </div>
       <div className="flex items-center w-screen h-screen uppercase">
-        <div className="flex justify-center w-full h-2/5 bg-black py-16">
-          <div className="flex flex-col items-center w-11/12 gap-2">
+        <div className="flex justify-center w-full h-2/5 bg-black py-8">
+          <div className="flex flex-col items-center w-11/12 gap-2 h-full justify-between">
             {isEnterPage && location.pathname === '/' ? (
               <>
                 <img src="/logo.png" alt="puas-logo" />
@@ -54,7 +54,7 @@ export function Layout({
                   onClick={() => setIsEnterPage(false)}
                 >
                   <div
-                    style={{height: '1.3rem'}}
+                    style={{height: '2rem'}}
                     className="px-8 w-full flash textFade"
                   >
                     press to enter
@@ -83,7 +83,7 @@ export function Layout({
                     </button>
                   </div>
                 </Text>
-                <div className="flex flex-col w-11/12 my-3 gap-2">
+                <div className="flex flex-col w-11/12 my-3 gap-4">
                   <>{children}</>
                 </div>
                 <Text colour="white">Push menu to exit</Text>
