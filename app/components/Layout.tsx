@@ -36,7 +36,7 @@ export function Layout({
 
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
-      <div className="h-full w-auto absolute object-cover -z-10">
+      <div className="h-full w-auto absolute object-cover -z-10 overflow-hidden">
         <img
           src="/puas-vid.gif"
           alt="puas-vid"
@@ -74,7 +74,9 @@ export function Layout({
                     >
                       Back
                     </button>
-                    <div>Camera menu</div>
+                    <div onClick={() => (window.location.href = '/')}>
+                      Camera menu
+                    </div>
                     <button
                       className="cursor-pointer uppercase"
                       onClick={() => (window.location.href = '/cart')}
