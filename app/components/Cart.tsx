@@ -125,7 +125,6 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
       <a href={checkoutUrl} target="_self">
         <p>Continue to Checkout &rarr;</p>
       </a>
-      <br />
     </div>
   );
 }
@@ -143,9 +142,11 @@ export function CartSummary({
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
+    <div
+      aria-labelledby="flex flex-col h-full justify-evenly"
+      className={className}
+    >
+      <dl className="flex gap-2">
         <dt>Subtotal</dt>
         <dd>
           {cost?.subtotalAmount?.amount ? (
@@ -167,7 +168,9 @@ function CartLineRemoveButton({lineIds}: {lineIds: string[]}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">Remove</button>
+      <button type="submit">
+        <small>Remove</small>
+      </button>
     </CartForm>
   );
 }
@@ -179,7 +182,7 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantiy flex">
+    <div className="flex align-middle">
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
@@ -187,10 +190,10 @@ function CartLineQuantity({line}: {line: CartLine}) {
           name="decrease-quantity"
           value={prevQuantity}
         >
-          <span>&#8722; </span>
+          <span className="pb-2">&#8722; </span>
         </button>
       </CartLineUpdateButton>
-      <small>&nbsp; {quantity} &nbsp;</small>
+      <small className="pt-1">&nbsp; {quantity} &nbsp;</small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           aria-label="Increase quantity"
