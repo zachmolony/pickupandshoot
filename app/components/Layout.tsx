@@ -48,7 +48,11 @@ export function Layout({
           <div className="flex flex-col items-center w-11/12 h-full justify-between bg-black">
             {isEnterPage && location.pathname === '/' ? (
               <>
-                <img src="/logo.png" alt="puas-logo" />
+                <img
+                  src="/logo.png"
+                  alt="puas-logo"
+                  className="object-contain"
+                />
                 <button
                   className="uppercase cursor-pointer"
                   onClick={() => setIsEnterPage(false)}

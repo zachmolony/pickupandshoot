@@ -52,7 +52,11 @@ a {
 
 a:hover {
   cursor: pointer;
-  background-color: #00ff00;
+  /* only on desktop */
+  @media (min-width: 768px) {
+    background-color: #00ff00;
+    color: #000;
+  }
 }
 
 @keyframes backgroundFlash {
