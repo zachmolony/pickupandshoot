@@ -35,15 +35,15 @@ export function Layout({
   const location = useLocation();
 
   return (
-    <>
-      <div className="h-screen w-auto absolute object-cover -z-10">
+    <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
+      <div className="h-full w-auto absolute object-cover -z-10">
         <img
           src="/puas-vid.gif"
           alt="puas-vid"
           className="h-full w-auto overflow-hidden filter blur-md"
         />
       </div>
-      <div className="flex items-center w-screen h-screen uppercase">
+      <div className="flex items-center w-full h-full  uppercase">
         <div className="flex justify-center w-full h-2/5 bg-black py-8">
           <div className="flex flex-col items-center w-11/12 gap-2 h-full justify-between">
             {isEnterPage && location.pathname === '/' ? (
@@ -92,7 +92,7 @@ export function Layout({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
