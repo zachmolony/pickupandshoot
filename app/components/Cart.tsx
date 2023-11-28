@@ -243,10 +243,7 @@ export function CartEmpty({
   return (
     <div hidden={hidden}>
       <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
-      </p>
+      <p>Storage empty</p>
       <br />
       <Link
         to="/collections"
@@ -256,7 +253,7 @@ export function CartEmpty({
           }
         }}
       >
-        Continue shopping →
+        Continue shooting →
       </Link>
     </div>
   );

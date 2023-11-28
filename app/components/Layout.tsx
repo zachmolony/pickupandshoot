@@ -43,9 +43,9 @@ export function Layout({
           className="h-full w-auto overflow-hidden filter blur-md"
         />
       </div>
-      <div className="flex items-center w-full h-full  uppercase">
-        <div className="flex justify-center w-full h-2/5 bg-black py-8">
-          <div className="flex flex-col items-center w-11/12 gap-2 h-full justify-between">
+      <div className="flex items-center w-full h-full uppercase">
+        <div className="flex justify-center w-full h-2/5 bg-black py-4">
+          <div className="flex flex-col items-center w-11/12 h-full justify-between bg-black">
             {isEnterPage && location.pathname === '/' ? (
               <>
                 <img src="/logo.png" alt="puas-logo" />
@@ -83,7 +83,7 @@ export function Layout({
                     </button>
                   </div>
                 </Text>
-                <div className="flex flex-col w-11/12 my-3 gap-4">
+                <div className="flex flex-col h-full w-11/12 my-1 justify-evenly">
                   <>{children}</>
                 </div>
                 <Text colour="white">Push menu to exit</Text>
