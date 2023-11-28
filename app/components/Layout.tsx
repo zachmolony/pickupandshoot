@@ -43,7 +43,7 @@ export function Layout({
           className="h-full w-auto overflow-hidden filter blur-md"
         />
       </div>
-      <div className="flex items-center w-full h-full uppercase">
+      <div className="flex items-center w-full h-full uppercase overflow-hidden">
         <div className="flex justify-center w-full h-2/5 bg-black py-4">
           <div className="flex flex-col items-center w-11/12 h-full justify-between bg-black">
             {isEnterPage && location.pathname === '/' ? (
