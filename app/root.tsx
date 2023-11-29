@@ -23,6 +23,7 @@ import resetStyles from './styles/reset.css';
 // import appStyles from './styles/app.css';
 import tailwind from './styles/tailwind.css';
 import {Layout} from '~/components/Layout';
+import {StoreProvider as RoutingProvider} from './store';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -122,12 +123,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout {...data}>
-          <Outlet />
-        </Layout>
-        <ScrollRestoration nonce={nonce} />
-        <Scripts nonce={nonce} />
-        <LiveReload nonce={nonce} />
+        <RoutingProvider>
+          <Layout {...data}>
+            <Outlet />
+          </Layout>
+          <ScrollRestoration nonce={nonce} />
+          <Scripts nonce={nonce} />
+          <LiveReload nonce={nonce} />
+        </RoutingProvider>
       </body>
     </html>
   );
