@@ -114,21 +114,38 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
+  const [descriptionView, setDescriptionView] = useState(false);
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
+  const {description} = product;
+
+  const desc =
+    'Boxy, oversized fit with dropped shoulders. Heavy weight, 240 GSM. 100% carded cotton. Wide neck ribbing with twin stitching preshrunk to minimise shrinkage';
+
   return (
-    <div className="flex gap-4">
-      <div className="flex flex-col w-1/3">
-        <ProductImage image={selectedVariant?.image} />
-        <br />
-        <ProductPrice selectedVariant={selectedVariant} />
-      </div>
-      <ProductMain
-        selectedVariant={selectedVariant}
-        product={product}
-        variants={variants}
-      />
-    </div>
+    <>
+      {descriptionView ? (
+        <div>{desc}</div>
+      ) : (
+        <div className="flex gap-4">
+          <div className="flex flex-col w-1/3">
+            <ProductImage image={selectedVariant?.image} />
+            <button
+              className="cursor-pointer uppercase whitespace-nowrap"
+              onClick={() => setDescriptionView(true)}
+            >
+              View detail
+            </button>
+            <ProductPrice selectedVariant={selectedVariant} />
+          </div>
+          <ProductMain
+            selectedVariant={selectedVariant}
+            product={product}
+            variants={variants}
+          />
+        </div>
+      )}
+    </>
   );
 }
 
@@ -157,6 +174,11 @@ function ProductMain({
   variants: Promise<ProductVariantsQuery>;
 }) {
   const {title, descriptionHtml} = product;
+
+  const desc =
+    'Boxy, oversized fit with dropped shoulders. Heavy weight, 240 GSM. 100% carded cotton. Wide neck ribbing with twin stitching preshrunk to minimise shrinkage';
+
+  console.log('product', product);
   return (
     <div className="product-main">
       {/* <h1>{title}</h1> */}
