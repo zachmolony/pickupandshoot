@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
@@ -72,7 +72,7 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     product.selectedVariant = firstVariant;
   } else {
     // if no selected variant was returned from the selected options,
-    // we redirect to the first variant's url with it's selected options applied
+    // we redirect to the first variant's url with its selected options applied
     if (!product.selectedVariant) {
       throw redirectToFirstVariant({product, request});
     }
@@ -80,9 +80,9 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
 
   // In order to show which variants are available in the UI, we need to query
   // all of them. But there might be a *lot*, so instead separate the variants
-  // into it's own separate query that is deferred. So there's a brief moment
+  // into its own separate query that is deferred. So there's a brief moment
   // where variant options might show as available when they're not, but after
-  // this deffered query resolves, the UI will update.
+  // this deferred query resolves, the UI will update.
   const variants = storefront.query(VARIANTS_QUERY, {
     variables: {handle},
   });
@@ -227,21 +227,39 @@ function ProductForm({
   selectedVariant: ProductFragment['selectedVariant'];
   variants: Array<ProductVariantFragment>;
 }) {
+  const [buttonText, setButtonText] = useState(
+    selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+  );
+
+  // todo: tidy this up
+  useEffect(() => {
+    setButtonText(
+      selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+    );
+  }, [selectedVariant]);
+
+  const handleAddToCart = () => {
+    setButtonText('Added to cart');
+    setTimeout(() => {
+      setButtonText(
+        selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+      );
+    }, 2000);
+  };
+
   return (
     <div className="product-form">
       <VariantSelector
         handle={product.handle}
         options={[product.options[0]]}
-        variants={[variants[0]]}
+        variants={variants}
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
       <br />
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
-        }}
+        onClick={handleAddToCart}
         lines={
           selectedVariant
             ? [
@@ -253,7 +271,7 @@ function ProductForm({
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {buttonText}
       </AddToCartButton>
     </div>
   );
@@ -268,7 +286,7 @@ function ProductOptions({option}: {option: VariantOption}) {
             <Link
               className={
                 'product-options-item flex flex-col ' +
-                `${isActive && ' bg-lime-400 text-slate-700 '}` +
+                `${isActive && ' bg-puas-green text-slate-800 '}` +
                 `${!isAvailable && ' line-through '}`
               }
               key={option.name + value}
