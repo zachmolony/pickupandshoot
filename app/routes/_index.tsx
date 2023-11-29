@@ -42,7 +42,7 @@ const content = {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
-  console.log(data);
+
   return (
     <>
       {content.homepage.items.map(({text, link}, index) => (

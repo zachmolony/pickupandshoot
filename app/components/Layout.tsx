@@ -13,6 +13,7 @@ import {
   PredictiveSearchResults,
 } from '~/components/Search';
 import Text from './Text';
+import {useStore} from '~/store';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -25,6 +26,15 @@ export type LayoutProps = {
 export function Layout({cart, children = null, header}: LayoutProps) {
   const [isEnterPage, setIsEnterPage] = useState(true);
   const location = useLocation();
+  const {setShowDescription} = useStore();
+
+  const goBack = () => {
+    if (window.location.pathname.includes('/products/')) {
+      setShowDescription(false);
+    } else {
+      window.history.back();
+    }
+  };
 
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
@@ -63,7 +73,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                   <div className="flex justify-between w-full">
                     <button
                       className="cursor-pointer uppercase"
-                      onClick={() => window.history.back()}
+                      onClick={goBack}
                       style={
                         location.pathname !== '/' ? {opacity: 1} : {opacity: 0}
                       }
