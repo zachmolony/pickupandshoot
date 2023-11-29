@@ -26,6 +26,8 @@ import type {
   SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/utils';
+import {useStore} from '~/store';
+import Text from '~/components/Text';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -114,29 +116,33 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const [descriptionView, setDescriptionView] = useState(false);
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
   const {description} = product;
+  const {showDescription, setShowDescription} = useStore();
+
+  const showDaTing = (show: boolean) => {
+    setShowDescription(show);
+  };
 
   const desc =
     'Boxy, oversized fit with dropped shoulders. Heavy weight, 240 GSM. 100% carded cotton. Wide neck ribbing with twin stitching preshrunk to minimise shrinkage';
 
   return (
     <>
-      {descriptionView ? (
+      {showDescription ? (
         <div>{desc}</div>
       ) : (
         <div className="flex gap-4">
           <div className="flex flex-col w-1/3">
             <ProductImage image={selectedVariant?.image} />
+            <ProductPrice selectedVariant={selectedVariant} />
             <button
-              className="cursor-pointer uppercase whitespace-nowrap"
-              onClick={() => setDescriptionView(true)}
+              className="cursor-pointer uppercase whitespace-nowrap mt-1"
+              onClick={() => showDaTing(true)}
             >
               View detail
             </button>
-            <ProductPrice selectedVariant={selectedVariant} />
           </div>
           <ProductMain
             selectedVariant={selectedVariant}
@@ -178,17 +184,9 @@ function ProductMain({
   const desc =
     'Boxy, oversized fit with dropped shoulders. Heavy weight, 240 GSM. 100% carded cotton. Wide neck ribbing with twin stitching preshrunk to minimise shrinkage';
 
-  console.log('product', product);
+  // console.log('product', product);
   return (
-    <div className="product-main">
-      {/* <h1>{title}</h1> */}
-      {/* <Image
-        alt={image.altText || 'Product Image'}
-        aspectRatio="1/1"
-        data={image}
-        key={image.id}
-        sizes="(min-width: 5em) 20vw, 10vw"
-      /> */}
+    <div className="flex-auto">
       <Suspense
         fallback={
           <ProductForm
@@ -250,51 +248,55 @@ function ProductForm({
   variants: Array<ProductVariantFragment>;
 }) {
   const [buttonText, setButtonText] = useState(
-    selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+    selectedVariant?.availableForSale ? 'ADD TO CART' : 'SOLD OUT',
   );
 
   // todo: tidy this up
   useEffect(() => {
     setButtonText(
-      selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+      selectedVariant?.availableForSale ? 'ADD TO CART' : 'SOLD OUT',
     );
   }, [selectedVariant]);
 
   const handleAddToCart = () => {
-    setButtonText('Added to cart');
+    setButtonText('ADDED TO CART');
     setTimeout(() => {
       setButtonText(
-        selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out',
+        selectedVariant?.availableForSale ? 'ADD TO CART' : 'SOLD OUT',
       );
     }, 2000);
   };
 
   return (
-    <div className="product-form">
-      <VariantSelector
-        handle={product.handle}
-        options={[product.options[0]]}
-        variants={variants}
-      >
-        {({option}) => <ProductOptions key={option.name} option={option} />}
-      </VariantSelector>
+    <div className="w-full">
+      <div className="ml-20">
+        <VariantSelector
+          handle={product.handle}
+          options={[product.options[0]]}
+          variants={variants}
+        >
+          {({option}) => <ProductOptions key={option.name} option={option} />}
+        </VariantSelector>
+      </div>
       <br />
-      <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={handleAddToCart}
-        lines={
-          selectedVariant
-            ? [
-                {
-                  merchandiseId: selectedVariant.id,
-                  quantity: 1,
-                },
-              ]
-            : []
-        }
-      >
-        {buttonText}
-      </AddToCartButton>
+      <div className="ml-8">
+        <AddToCartButton
+          disabled={!selectedVariant || !selectedVariant.availableForSale}
+          onClick={handleAddToCart}
+          lines={
+            selectedVariant
+              ? [
+                  {
+                    merchandiseId: selectedVariant.id,
+                    quantity: 1,
+                  },
+                ]
+              : []
+          }
+        >
+          {buttonText}
+        </AddToCartButton>
+      </div>
     </div>
   );
 }
@@ -347,18 +349,20 @@ function AddToCartButton({
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => (
         <>
-          <input
-            name="analytics"
-            type="hidden"
-            value={JSON.stringify(analytics)}
-          />
-          <button
-            type="submit"
-            onClick={onClick}
-            disabled={disabled ?? fetcher.state !== 'idle'}
-          >
-            {children}
-          </button>
+          <Text colour="white">
+            <input
+              name="analytics"
+              type="hidden"
+              value={JSON.stringify(analytics)}
+            />
+            <button
+              type="submit"
+              onClick={onClick}
+              disabled={disabled ?? fetcher.state !== 'idle'}
+            >
+              {children}
+            </button>
+          </Text>
         </>
       )}
     </CartForm>
