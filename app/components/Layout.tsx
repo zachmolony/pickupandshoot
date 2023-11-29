@@ -39,24 +39,24 @@ export function Layout({cart, children = null, header}: LayoutProps) {
         <div className="flex justify-center w-full h-2/5 bg-black py-4">
           <div className="flex flex-col items-center w-11/12 h-full justify-between bg-black">
             {isEnterPage && location.pathname === '/' ? (
-              <>
+              <div className="flex flex-col items-center w-full h-full justify-evenly">
                 <img
                   src="/logo.png"
                   alt="puas-logo"
                   className="object-contain"
                 />
                 <button
-                  className="uppercase cursor-pointer"
+                  className="uppercase cursor-pointer mb-6"
                   onClick={() => setIsEnterPage(false)}
                 >
                   <div
-                    style={{height: '2rem'}}
+                    style={{height: '1.7rem'}}
                     className="px-8 w-full flash textFade"
                   >
                     press to enter
                   </div>
                 </button>
-              </>
+              </div>
             ) : (
               <>
                 <Text colour="white">
@@ -78,7 +78,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                       onClick={() => (window.location.href = '/cart')}
                     >
                       Cart(
-                      <Suspense fallback={<p>Loading cart ...</p>}>
+                      <Suspense fallback={<>0</>}>
                         <Await resolve={cart}>
                           {(cart) => {
                             return cart?.totalQuantity;
