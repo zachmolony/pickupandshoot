@@ -24,7 +24,7 @@ export async function loader({context}: LoaderFunctionArgs) {
 const content = {
   homepage: {
     items: [
-      {text: '1.Shop', link: '/collections'},
+      {text: '1.Shop', link: '/collections/frontpage'},
       {text: '2.camera setup', link: '/collections'},
       {text: '3.display setup', link: '/collections'},
       {text: '4.other functions', link: '/collections'},

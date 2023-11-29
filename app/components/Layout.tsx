@@ -23,15 +23,8 @@ export type LayoutProps = {
   isLoggedIn: boolean;
 };
 
-export function Layout({
-  cart,
-  children = null,
-  footer,
-  header,
-  isLoggedIn,
-}: LayoutProps) {
+export function Layout({cart, children = null, header}: LayoutProps) {
   const [isEnterPage, setIsEnterPage] = useState(true);
-
   const location = useLocation();
 
   return (
@@ -76,7 +69,7 @@ export function Layout({
                         location.pathname !== '/' ? {opacity: 1} : {opacity: 0}
                       }
                     >
-                      Back
+                      Back&nbsp;&nbsp;&nbsp;
                     </button>
                     <div onClick={() => (window.location.href = '/')}>
                       Camera menu
@@ -85,7 +78,15 @@ export function Layout({
                       className="cursor-pointer uppercase"
                       onClick={() => (window.location.href = '/cart')}
                     >
-                      Cart
+                      Cart(
+                      <Suspense fallback={<p>Loading cart ...</p>}>
+                        <Await resolve={cart}>
+                          {(cart) => {
+                            return cart?.totalQuantity;
+                          }}
+                        </Await>
+                      </Suspense>
+                      )
                     </button>
                   </div>
                 </Text>
