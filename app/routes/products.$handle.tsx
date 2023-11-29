@@ -138,10 +138,10 @@ export default function Product() {
             <ProductImage image={selectedVariant?.image} />
             <ProductPrice selectedVariant={selectedVariant} />
             <button
-              className="cursor-pointer uppercase whitespace-nowrap mt-1"
+              className="cursor-pointer uppercase whitespace-nowrap mt-1 text-start"
               onClick={() => showDaTing(true)}
             >
-              View detail
+              <>View info</>
             </button>
           </div>
           <ProductMain
