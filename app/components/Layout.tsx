@@ -26,10 +26,13 @@ export type LayoutProps = {
 export function Layout({cart, children = null, header}: LayoutProps) {
   const [isEnterPage, setIsEnterPage] = useState(true);
   const location = useLocation();
-  const {setShowDescription} = useStore();
+  const {setShowDescription, showDescription} = useStore();
 
   const goBack = () => {
-    if (window.location.pathname.includes('/products/')) {
+    if (
+      window.location.pathname.includes('/products/') &&
+      showDescription === true
+    ) {
       setShowDescription(false);
     } else {
       window.history.back();
