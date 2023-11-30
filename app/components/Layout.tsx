@@ -53,7 +53,11 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     boxShadow: 'rgb(0 0 0 / 22%) -13px 13px 4px 0px inset',
   };
 
-  const sounds = ['/3.wav'];
+  const sounds = [
+    'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/1.wav?v=1701357306',
+    'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/3.wav?v=1701357305',
+    'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/2.wav?v=1701357305',
+  ];
 
   const playRandomSound = () => {
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
@@ -63,18 +67,20 @@ export function Layout({cart, children = null, header}: LayoutProps) {
   };
 
   const playClickSound = () => {
-    const sound = new Audio('/3.wav');
+    const sound = new Audio(
+      'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/2.wav?v=1701357305',
+    );
     sound.volume = 0.3;
     sound.play();
   };
 
   useEffect(() => {
     const handleClick = () => {
-      playClickSound();
+      playRandomSound();
     };
 
     window.addEventListener('click', handleClick);
-    window.addEventListener('touchstart', handleClick');
+    window.addEventListener('touchstart', handleClick);
 
     return () => {
       window.removeEventListener('click', handleClick);
