@@ -18,7 +18,7 @@ import {
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import type {CustomerAccessToken} from '@shopify/hydrogen/storefront-api-types';
-import favicon from '../public/favicon.svg';
+import favicon from '../public/favicon.ico';
 import resetStyles from './styles/reset.css';
 // import appStyles from './styles/app.css';
 import tailwind from './styles/tailwind.css';
@@ -59,7 +59,22 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'icon', type: 'image/ico+xml', href: favicon},
+    {rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png'},
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      href: '/favicon-32x32.png',
+    },
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      href: '/favicon-16x16.png',
+    },
+    {rel: 'manifest', href: '/site.webmanifest'},
+    {rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#5bbad5'},
   ];
 }
 
