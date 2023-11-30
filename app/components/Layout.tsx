@@ -62,23 +62,20 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     sound.play();
   };
 
+  const playClickSound = () => {
+    const sound = new Audio('/3.wav');
+    sound.volume = 0.3;
+    sound.play();
+  };
+
   useEffect(() => {
-    let firstInteraction = true;
+    const handleClick = () => {
+      playClickSound();
+    };
 
-    window.addEventListener(
-      'click',
-      (e) => {
-        if (firstInteraction) {
-          // Play initial sound to unlock audio on iOS
-          playRandomSound();
-          // firstInteraction = false;
-        }
-      },
-      // {once: true},
-    );
-
+    window.addEventListener('click', handleClick);
     return () => {
-      window.removeEventListener('click', playRandomSound);
+      window.removeEventListener('click', handleClick);
     };
   }, []);
 
