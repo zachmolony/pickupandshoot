@@ -249,7 +249,7 @@ export function CartEmpty({
       <p>Storage empty</p>
       <br />
       <Link
-        to="/collections"
+        to="/"
         onClick={() => {
           if (layout === 'aside') {
             window.location.href = '/collections';

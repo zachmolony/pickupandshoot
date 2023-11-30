@@ -1,4 +1,4 @@
-import {Await, useLocation} from '@remix-run/react';
+import {Await, Link, useLocation} from '@remix-run/react';
 import {Suspense, useState} from 'react';
 import type {
   CartApiQueryFragment,
@@ -45,12 +45,15 @@ export function Layout({cart, children = null, header}: LayoutProps) {
         <img
           src="/puas-vid.gif"
           alt="puas-vid"
-          className="h-full w-auto overflow-hidden filter blur-md"
+          className="h-full w-auto overflow-hidden object-cover filter blur-md"
         />
       </div>
       <div className="flex items-center w-full h-full uppercase overflow-hidden">
         <div className="flex justify-center w-full h-2/5 bg-black py-4">
-          <div className="flex flex-col items-center w-11/12 h-full justify-between bg-black">
+          <div
+            className="flex flex-col items-center w-11/12 h-full justify-between bg-black"
+            style={{maxWidth: '500px'}}
+          >
             {isEnterPage && location.pathname === '/' ? (
               <div className="flex flex-col items-center w-full h-full justify-evenly">
                 <img
@@ -83,8 +86,8 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                     >
                       Back&nbsp;&nbsp;&nbsp;
                     </button>
-                    <div onClick={() => (window.location.href = '/')}>
-                      Camera menu
+                    <div>
+                      <Link to="/">Camera menu</Link>
                     </div>
                     <button
                       className="cursor-pointer uppercase"
@@ -105,7 +108,9 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                 <div className="flex flex-col h-full w-11/12 my-1 justify-evenly">
                   <>{children}</>
                 </div>
-                <Text colour="white">Push menu to exit</Text>
+                <Text colour="white">
+                  <Link to="/">Push menu to exit</Link>
+                </Text>
               </>
             )}
           </div>
