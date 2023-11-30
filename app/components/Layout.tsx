@@ -59,27 +59,23 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/3.wav?v=1701357305',
   ];
 
-  const playRandomSound = () => {
-    // const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-    const randomSound = sounds[2];
-    const sound = new Audio(randomSound);
-    sound.volume = 0.15;
-    sound.play();
-  };
-
   useEffect(() => {
-    const handleClick = () => {
-      playRandomSound();
+    const playRandomSound = () => {
+      // const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+      const randomSound = sounds[2];
+      const sound = new Audio(randomSound);
+      sound.volume = 0.15;
+      sound.play();
     };
 
     // window.addEventListener('click', handleClick);
-    window.addEventListener('touchstart', handleClick);
+    window.addEventListener('touchstart', playRandomSound);
 
     return () => {
       // window.removeEventListener('click', handleClick);
-      window.removeEventListener('touchstart', handleClick);
+      window.removeEventListener('touchstart', playRandomSound);
     };
-  }, []);
+  });
 
   const handleUserInteraction = () => {
     setShowLogo(false);

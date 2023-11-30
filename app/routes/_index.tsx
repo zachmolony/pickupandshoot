@@ -46,7 +46,12 @@ export default function Homepage() {
   return (
     <>
       {content.homepage.items.map(({text, link}, index) => (
-        <Link key={link} to={link} prefetch="intent">
+        <Link
+          key={link}
+          to={link}
+          prefetch="intent"
+          className="w-8/12 whitespace-nowrap"
+        >
           <Text key={text} colour={index === 0 ? 'green' : undefined}>
             {text}
           </Text>

@@ -105,10 +105,10 @@ function ProductItem({
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
-    <Link className="w-1/3" key={product.id} prefetch="intent" to={variantUrl}>
+    <Link className="w-5/12" key={product.id} prefetch="intent" to={variantUrl}>
       <div className="flex gap-3">
         {product.featuredImage && (
-          <div className="w-1/3">
+          <div className="w-5/12">
             <Image
               alt={product.featuredImage.altText || product.title}
               aspectRatio="1/1"
