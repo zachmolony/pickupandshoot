@@ -21,7 +21,7 @@ export function CartMain({layout, cart}: CartMainProps) {
   return (
     <div className="flex flex-col justify-evenly h-full">
       <CartEmpty hidden={linesCount} layout={layout} />
-      <CartDetails cart={cart} layout={layout} />
+      {linesCount && <CartDetails cart={cart} layout={layout} />}
     </div>
   );
 }
@@ -31,7 +31,7 @@ function CartDetails({layout, cart}: CartMainProps) {
 
   return (
     <div className="flex flex-col justify-evenly h-full">
-      <h1>Cart</h1>
+      {cartHasItems && <h1>Cart</h1>}
       <CartLines lines={cart?.lines} layout={layout} />
       {cartHasItems && (
         <CartSummary cost={cart.cost} layout={layout}>
@@ -246,6 +246,7 @@ export function CartEmpty({
 }) {
   return (
     <div hidden={hidden}>
+      <h1>Cart</h1>
       <br />
       <p>Storage empty</p>
       <br />
