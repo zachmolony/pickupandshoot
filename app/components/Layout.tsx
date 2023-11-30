@@ -63,7 +63,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     // const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
     const randomSound = sounds[2];
     const sound = new Audio(randomSound);
-    sound.volume = 0.3;
+    sound.volume = 0.15;
     sound.play();
   };
 
