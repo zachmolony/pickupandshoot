@@ -55,21 +55,14 @@ export function Layout({cart, children = null, header}: LayoutProps) {
 
   const sounds = [
     'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/1.wav?v=1701357306',
-    'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/3.wav?v=1701357305',
     'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/2.wav?v=1701357305',
+    'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/3.wav?v=1701357305',
   ];
 
   const playRandomSound = () => {
-    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    // const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    const randomSound = sounds[2];
     const sound = new Audio(randomSound);
-    sound.volume = 0.3;
-    sound.play();
-  };
-
-  const playClickSound = () => {
-    const sound = new Audio(
-      'https://cdn.shopify.com/s/files/1/0794/4008/5341/files/2.wav?v=1701357305',
-    );
     sound.volume = 0.3;
     sound.play();
   };
@@ -100,6 +93,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
       <audio id="background-audio" autoPlay loop>
+        <track kind="captions" />
         <source src="/background-music.mp3" type="audio/mpeg" />
       </audio>
       <div className="h-full w-auto absolute object-cover -z-10 overflow-hidden">

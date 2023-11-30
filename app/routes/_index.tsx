@@ -47,7 +47,7 @@ export default function Homepage() {
     <>
       {content.homepage.items.map(({text, link}, index) => (
         <Link key={link} to={link} prefetch="intent">
-          <Text key={text} colour={index === 0 && 'green'}>
+          <Text key={text} colour={index === 0 ? 'green' : undefined}>
             {text}
           </Text>
         </Link>
