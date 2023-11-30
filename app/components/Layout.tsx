@@ -39,6 +39,24 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     }
   };
 
+  const borderStyle = {
+    borderTop: '20px',
+    borderBottom: '20px',
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+  };
+
+  const boxShadowStyle = {
+    boxShadow: '0px 4px 4px 0px rgba(244, 226, 226, 0.22) inset',
+  };
+
+  const insetBoxShadowStyle = {
+    boxShadow: '0px 4px 4px 0px rgba(244, 226, 226, 0.22)',
+  };
+
+  const innerScreenBoxShadowStyle = {
+    boxShadow: 'rgb(0 0 0 / 22%) -13px 13px 4px 0px inset',
+  };
+
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
       <div className="h-full w-auto absolute object-cover -z-10 overflow-hidden">
@@ -49,70 +67,85 @@ export function Layout({cart, children = null, header}: LayoutProps) {
         />
       </div>
       <div className="flex items-center w-full h-full uppercase overflow-hidden">
-        <div className="flex justify-center w-full h-2/5 bg-black py-4">
+        <div
+          className="flex justify-center w-full bg-black py-10"
+          style={{height: '45%', ...boxShadowStyle}}
+        >
           <div
-            className="flex flex-col items-center w-11/12 h-full justify-between bg-black"
-            style={{maxWidth: '500px'}}
+            className="flex flex-col items-center w-full h-full justify-between bg-screen"
+            style={insetBoxShadowStyle}
           >
-            {isEnterPage && location.pathname === '/' ? (
-              <div className="flex flex-col items-center w-full h-full justify-evenly">
-                <img
-                  src="/logo.png"
-                  alt="puas-logo"
-                  className="object-contain"
-                />
-                <button
-                  className="uppercase cursor-pointer mb-6"
-                  onClick={() => setIsEnterPage(false)}
-                >
-                  <div
-                    style={{height: '1.7rem'}}
-                    className="px-8 w-full flash textFade"
-                  >
-                    press to enter
-                  </div>
-                </button>
-              </div>
-            ) : (
-              <>
-                <Text colour="white">
-                  <div className="flex justify-between w-full">
+            <div
+              className="flex flex-col items-center w-full h-full justify-between"
+              style={innerScreenBoxShadowStyle}
+            >
+              <div
+                className="flex flex-col items-center w-11/12 h-full py-6 justify-between"
+                style={{maxWidth: '500px'}}
+              >
+                {isEnterPage && location.pathname === '/' ? (
+                  <div className="flex flex-col items-center w-full h-full justify-evenly">
+                    <img
+                      src="/logo.png"
+                      alt="puas-logo"
+                      className="object-contain"
+                    />
                     <button
-                      className="cursor-pointer uppercase"
-                      onClick={goBack}
-                      style={
-                        location.pathname !== '/' ? {opacity: 1} : {opacity: 0}
-                      }
+                      className="uppercase cursor-pointer mb-6"
+                      onClick={() => setIsEnterPage(false)}
                     >
-                      Back&nbsp;&nbsp;&nbsp;
+                      <div
+                        style={{height: '1.7rem'}}
+                        className="px-8 w-full flash textFade"
+                      >
+                        press to enter
+                      </div>
                     </button>
-                    <div>
-                      <Link to="/">Camera menu</Link>
+                  </div>
+                ) : (
+                  <>
+                    <Text colour="white">
+                      <div className="flex justify-between w-full">
+                        <button
+                          className="cursor-pointer uppercase"
+                          onClick={goBack}
+                          style={
+                            location.pathname !== '/'
+                              ? {opacity: 1}
+                              : {opacity: 0}
+                          }
+                        >
+                          Back&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <div>
+                          <Link to="/">Camera menu</Link>
+                        </div>
+                        <button
+                          className="cursor-pointer uppercase"
+                          onClick={() => (window.location.href = '/cart')}
+                        >
+                          Cart(
+                          <Suspense fallback={<>0</>}>
+                            <Await resolve={cart}>
+                              {(cart) => {
+                                return cart?.totalQuantity;
+                              }}
+                            </Await>
+                          </Suspense>
+                          )
+                        </button>
+                      </div>
+                    </Text>
+                    <div className="flex flex-col h-full w-11/12 my-1 justify-evenly">
+                      <>{children}</>
                     </div>
-                    <button
-                      className="cursor-pointer uppercase"
-                      onClick={() => (window.location.href = '/cart')}
-                    >
-                      Cart(
-                      <Suspense fallback={<>0</>}>
-                        <Await resolve={cart}>
-                          {(cart) => {
-                            return cart?.totalQuantity;
-                          }}
-                        </Await>
-                      </Suspense>
-                      )
-                    </button>
-                  </div>
-                </Text>
-                <div className="flex flex-col h-full w-11/12 my-1 justify-evenly">
-                  <>{children}</>
-                </div>
-                <Text colour="white">
-                  <Link to="/">Push menu to exit</Link>
-                </Text>
-              </>
-            )}
+                    <Text colour="white">
+                      <Link to="/">Push menu to exit</Link>
+                    </Text>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

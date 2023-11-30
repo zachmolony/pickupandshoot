@@ -9,6 +9,10 @@ export default {
     extend: {
       colors: {
         'puas-green': '#00ff00',
+        screen: '#121212',
+      },
+      borderWidth: {
+        24: '24px',
       },
     },
   },
