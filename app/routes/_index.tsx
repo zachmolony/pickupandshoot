@@ -25,17 +25,17 @@ const content = {
   homepage: {
     items: [
       {text: '1.Shop', link: '/collections/frontpage'},
-      {text: '2.camera setup', link: '/collections'},
-      {text: '3.display setup', link: '/collections'},
-      {text: '4.other functions', link: '/collections'},
+      {text: '2.camera setup', link: '/error'},
+      {text: '3.display setup', link: '/error'},
+      {text: '4.other functions', link: '/error'},
     ],
   },
   shop: {
     items: [
       {text: '1.All items', link: '/collections'},
-      {text: '2.Tees', link: '/collections/tops'},
-      {text: '3.Keyrings', link: '/collections/keyrings'},
-      {text: '4.Posters', link: '/collections/posters'},
+      {text: '2.Tees', link: '/collections/error'},
+      {text: '3.Keyrings', link: '/collections/error'},
+      {text: '4.Posters', link: '/collections/error'},
     ],
   },
 };
