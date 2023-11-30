@@ -80,7 +80,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
               style={innerScreenBoxShadowStyle}
             >
               <div
-                className="flex flex-col items-center w-11/12 h-full py-6 justify-between"
+                className="flex flex-col items-center w-11/12 h-full py-2 md:py-4 md-pro-max:py-6 justify-between"
                 style={{maxWidth: '500px'}}
               >
                 {isEnterPage && location.pathname === '/' ? (

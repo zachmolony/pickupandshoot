@@ -6,6 +6,11 @@ export default {
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   plugins: [formsPlugin, typographyPlugin],
   theme: {
+    screens: {
+      md: '390px',
+      'md-pro-max': '430px',
+      lg: '640px',
+    },
     extend: {
       colors: {
         'puas-green': '#00ff00',
