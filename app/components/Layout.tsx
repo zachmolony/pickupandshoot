@@ -1,5 +1,5 @@
 import {Await, Link, useLocation} from '@remix-run/react';
-import {Suspense, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -39,12 +39,6 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     }
   };
 
-  const borderStyle = {
-    borderTop: '20px',
-    borderBottom: '20px',
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-  };
-
   const boxShadowStyle = {
     boxShadow: '0px 4px 4px 0px rgba(244, 226, 226, 0.22) inset',
   };
@@ -57,8 +51,28 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     boxShadow: 'rgb(0 0 0 / 22%) -13px 13px 4px 0px inset',
   };
 
+  const sounds = ['/1.wav', '/2.wav', '/3.wav'];
+
+  const playRandomSound = () => {
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    const sound = new Audio(randomSound);
+    sound.volume = 0.3;
+    sound.play();
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', playRandomSound);
+
+    return () => {
+      window.removeEventListener('click', playRandomSound);
+    };
+  }, []);
+
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
+      <audio autoPlay loop>
+        <source src="/background-music.mp3" type="audio/mpeg" />
+      </audio>
       <div className="h-full w-auto absolute object-cover -z-10 overflow-hidden">
         <img
           src="/puas-vid.gif"
@@ -120,10 +134,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                         <div>
                           <Link to="/">Camera menu</Link>
                         </div>
-                        <button
-                          className="cursor-pointer uppercase"
-                          onClick={() => (window.location.href = '/cart')}
-                        >
+                        <Link className="cursor-pointer uppercase" to="/cart">
                           Cart(
                           <Suspense fallback={<>0</>}>
                             <Await resolve={cart}>
@@ -133,7 +144,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                             </Await>
                           </Suspense>
                           )
-                        </button>
+                        </Link>
                       </div>
                     </Text>
                     <div className="flex flex-col h-full w-11/12 my-1 justify-evenly">
