@@ -53,7 +53,7 @@ function CartLines({
 
   return (
     <div aria-labelledby="cart-lines">
-      <ul>
+      <ul className="flex overflow-scroll">
         {lines.nodes.map((line) => (
           <CartLineItem key={line.id} line={line} layout={layout} />
         ))}
@@ -74,7 +74,7 @@ function CartLineItem({
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="flex gap-4">
+    <li key={id} className="flex gap-4" style={{minWidth: '250px'}}>
       {image && (
         <Image
           alt={title}
