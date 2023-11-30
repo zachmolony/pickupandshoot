@@ -89,8 +89,7 @@ export default function Cart() {
   const cartPromise = rootData.cart;
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
+    <div className="h-full">
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await
           resolve={cartPromise}
