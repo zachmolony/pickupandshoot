@@ -169,7 +169,9 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                       <>{children}</>
                     </div>
                     <Text colour="white">
-                      <Link to="/">Push menu to exit</Link>
+                      <Link to="/" onClick={() => setShowLogo(true)}>
+                        Push menu to exit
+                      </Link>
                     </Text>
                   </>
                 )}
