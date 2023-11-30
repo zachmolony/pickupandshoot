@@ -24,9 +24,9 @@ export type LayoutProps = {
 };
 
 export function Layout({cart, children = null, header}: LayoutProps) {
-  const [isEnterPage, setIsEnterPage] = useState(true);
   const location = useLocation();
-  const {setShowDescription, showDescription} = useStore();
+  const {setShowDescription, showDescription, showLogo, setShowLogo} =
+    useStore();
 
   const goBack = () => {
     if (
@@ -34,6 +34,8 @@ export function Layout({cart, children = null, header}: LayoutProps) {
       showDescription === true
     ) {
       setShowDescription(false);
+    } else if (window.location.pathname === '/' && showLogo === false) {
+      setShowLogo(true);
     } else {
       window.history.back();
     }
@@ -51,7 +53,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
     boxShadow: 'rgb(0 0 0 / 22%) -13px 13px 4px 0px inset',
   };
 
-  const sounds = ['/1.wav', '/2.wav', '/3.wav'];
+  const sounds = ['/3.wav'];
 
   const playRandomSound = () => {
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
@@ -81,7 +83,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
   }, []);
 
   const handleUserInteraction = () => {
-    setIsEnterPage(false);
+    setShowLogo(false);
     // play background music
     const audio = document.getElementById(
       'background-audio',
@@ -118,7 +120,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                 className="flex flex-col items-center w-11/12 h-full py-2 md:py-4 md-pro-max:py-6 justify-between"
                 style={{maxWidth: '500px'}}
               >
-                {isEnterPage && location.pathname === '/' ? (
+                {showLogo && location.pathname === '/' ? (
                   <div className="flex flex-col items-center w-full h-full justify-evenly">
                     <img
                       src="https://cdn.shopify.com/s/files/1/0794/4008/5341/files/puas-spinner.gif?v=1701352471"
@@ -144,11 +146,6 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                         <button
                           className="cursor-pointer uppercase"
                           onClick={goBack}
-                          style={
-                            location.pathname !== '/'
-                              ? {opacity: 1}
-                              : {opacity: 0}
-                          }
                         >
                           Back&nbsp;&nbsp;&nbsp;
                         </button>

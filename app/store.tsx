@@ -2,21 +2,32 @@ import React, {createContext, useState} from 'react';
 
 type StoreContextType = {
   showDescription: boolean;
+  showLogo: boolean;
   setShowDescription: React.Dispatch<React.SetStateAction<boolean>>;
+
+  setShowLogo: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const StoreContext = createContext<StoreContextType>({
   showDescription: false,
+  showLogo: false,
   setShowDescription: () => {},
+  setShowLogo: () => {},
 });
 
 const StoreProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [showDescription, setShowDescription] = useState<boolean>(false);
+  const [showLogo, setShowLogo] = useState<boolean>(false);
+
+  const value = {
+    showDescription,
+    showLogo,
+    setShowDescription,
+    setShowLogo,
+  };
 
   return (
-    <StoreContext.Provider value={{showDescription, setShowDescription}}>
-      {children}
-    </StoreContext.Provider>
+    <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
   );
 };
 
