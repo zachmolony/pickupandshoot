@@ -69,7 +69,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
       <div className="flex items-center w-full h-full uppercase overflow-hidden">
         <div
           className="flex justify-center w-full bg-black py-10"
-          style={{height: '45%', ...boxShadowStyle}}
+          style={{height: '53%', ...boxShadowStyle}}
         >
           <div
             className="flex flex-col items-center w-full h-full justify-between bg-screen"
