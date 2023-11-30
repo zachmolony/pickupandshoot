@@ -61,7 +61,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
   };
 
   useEffect(() => {
-    const firstInteraction = true;
+    let firstInteraction = true;
 
     window.addEventListener(
       'click',
@@ -69,10 +69,10 @@ export function Layout({cart, children = null, header}: LayoutProps) {
         if (firstInteraction) {
           // Play initial sound to unlock audio on iOS
           playRandomSound();
-          firstInteraction = false;
+          // firstInteraction = false;
         }
       },
-      {once: true},
+      // {once: true},
     );
 
     return () => {
