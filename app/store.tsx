@@ -17,7 +17,7 @@ const StoreContext = createContext<StoreContextType>({
 
 const StoreProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
   const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [showLogo, setShowLogo] = useState<boolean>(false);
+  const [showLogo, setShowLogo] = useState<boolean>(true);
 
   const value = {
     showDescription,
