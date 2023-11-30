@@ -100,7 +100,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                 {isEnterPage && location.pathname === '/' ? (
                   <div className="flex flex-col items-center w-full h-full justify-evenly">
                     <img
-                      src="/logo.png"
+                      src="https://cdn.shopify.com/s/files/1/0794/4008/5341/files/puas-spinner.gif?v=1701352471"
                       alt="puas-logo"
                       className="object-contain"
                     />
