@@ -61,16 +61,37 @@ export function Layout({cart, children = null, header}: LayoutProps) {
   };
 
   useEffect(() => {
-    window.addEventListener('click', playRandomSound);
+    const firstInteraction = true;
+
+    window.addEventListener(
+      'click',
+      (e) => {
+        if (firstInteraction) {
+          // Play initial sound to unlock audio on iOS
+          playRandomSound();
+          firstInteraction = false;
+        }
+      },
+      {once: true},
+    );
 
     return () => {
       window.removeEventListener('click', playRandomSound);
     };
   }, []);
 
+  const handleUserInteraction = () => {
+    setIsEnterPage(false);
+    // play background music
+    const audio = document.getElementById(
+      'background-audio',
+    ) as HTMLAudioElement;
+    audio.play();
+  };
+
   return (
     <div className="absolute inset-0 h-[calc(100dvh)] overflow-hidden">
-      <audio autoPlay loop>
+      <audio id="background-audio" autoPlay loop>
         <source src="/background-music.mp3" type="audio/mpeg" />
       </audio>
       <div className="h-full w-auto absolute object-cover -z-10 overflow-hidden">
@@ -106,7 +127,7 @@ export function Layout({cart, children = null, header}: LayoutProps) {
                     />
                     <button
                       className="uppercase cursor-pointer mb-6"
-                      onClick={() => setIsEnterPage(false)}
+                      onClick={handleUserInteraction}
                     >
                       <div
                         style={{height: '1.7rem'}}
