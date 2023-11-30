@@ -79,11 +79,11 @@ export function Layout({cart, children = null, header}: LayoutProps) {
       playRandomSound();
     };
 
-    window.addEventListener('click', handleClick);
+    // window.addEventListener('click', handleClick);
     window.addEventListener('touchstart', handleClick);
 
     return () => {
-      window.removeEventListener('click', handleClick);
+      // window.removeEventListener('click', handleClick);
       window.removeEventListener('touchstart', handleClick);
     };
   }, []);
